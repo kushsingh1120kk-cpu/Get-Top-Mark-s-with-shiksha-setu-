@@ -1,0 +1,18 @@
+workflows:
+  android-workflow:
+    name: Android AAB Build
+    environment:
+      flutter: 3.24.0
+    scripts:
+      - name: Extract ZIP
+        script: |
+          unzip qZoAvuQWxaMCoksb.zip -d project
+          cd project/shiksha_setu
+          sed -i 's/compileSdk = flutter.compileSdkVersion.toInteger()/compileSdk = 35/' android/app/build.gradle
+          sed -i 's/targetSdk = flutter.targetSdkVersion.toInteger()/targetSdk = 35/' android/app/build.gradle
+      - name: Get packages
+        script: cd project/shiksha_setu && flutter pub get
+      - name: Build AAB
+        script: cd project/shiksha_setu && flutter build appbundle --release
+    artifacts:
+      - project/shiksha_setu/build/**/outputs/**/*.aab
