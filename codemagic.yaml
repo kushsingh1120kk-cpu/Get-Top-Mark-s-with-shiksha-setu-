@@ -8,8 +8,18 @@ workflows:
         script: |
           unzip -o qZoAvuQWxaMCoksb.zip -d project
           cd project/shiksha_setu
-          sed -i 's/compileSdk = flutter.compileSdkVersion.toInteger()/compileSdk = 35/' android/app/build.gradle
-          sed -i 's/targetSdk = flutter.targetSdkVersion.toInteger()/targetSdk = 35/' android/app/build.gradle
+          python3 -c "
+          import re
+          f = open('android/app/build.gradle', 'r')
+          content = f.read()
+          f.close()
+          content = content.replace('compileSdk = flutter.compileSdkVersion.toInteger()', 'compileSdk = 35')
+          content = content.replace('targetSdk = flutter.targetSdkVersion.toInteger()', 'targetSdk = 35')
+          f = open('android/app/build.gradle', 'w')
+          f.write(content)
+          f.close()
+          print('Done!')
+          "
       - name: Get packages
         script: cd project/shiksha_setu && flutter pub get
       - name: Build AAB
