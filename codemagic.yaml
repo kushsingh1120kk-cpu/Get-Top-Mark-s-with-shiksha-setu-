@@ -3,13 +3,17 @@ workflows:
     name: Android AAB Build
     environment:
       flutter: 3.27.0
+    workflows:
+  android-workflow:
+    name: Android AAB Build
+    environment:
+      flutter: 3.27.0
     scripts:
       - name: Extract ZIP
         script: |
           unzip -o qZoAvuQWxaMCoksb.zip -d project
           cd project/shiksha_setu
           python3 -c "
-          import re
           f = open('android/app/build.gradle', 'r')
           content = f.read()
           f.close()
@@ -18,7 +22,15 @@ workflows:
           f = open('android/app/build.gradle', 'w')
           f.write(content)
           f.close()
-          print('Done!')
+          "
+          python3 -c "
+          f = open('android/settings.gradle', 'r')
+          content = f.read()
+          f.close()
+          content = content.replace('id \"com.android.application\" version \"7.3.0\"', 'id \"com.android.application\" version \"8.6.0\"')
+          f = open('android/settings.gradle', 'w')
+          f.write(content)
+          f.close()
           "
       - name: Get packages
         script: cd project/shiksha_setu && flutter pub get
