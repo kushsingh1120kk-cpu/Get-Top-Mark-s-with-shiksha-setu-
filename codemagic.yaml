@@ -6,7 +6,7 @@ workflows:
     scripts:
       - name: Extract ZIP
         script: |
-        unzip -o qZoAvuQWxaMCoksb.zip -d project -x "*/windows/*" || true
+          unzip -o qZoAvuQWxaMCoksb.zip -d project
           cd project/shiksha_setu
           sed -i 's/compileSdk = flutter.compileSdkVersion.toInteger()/compileSdk = 35/' android/app/build.gradle
           sed -i 's/targetSdk = flutter.targetSdkVersion.toInteger()/targetSdk = 35/' android/app/build.gradle
