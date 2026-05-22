@@ -19,11 +19,22 @@ workflows:
           f.close()
           "
           python3 -c "
+          import re
+          f = open('android/settings.gradle', 'r')
+          content = f.read()
+          f.close()
+          content = re.sub(r'com.android.application.*version.*\"[0-9.]+\"', 'com.android.application\" version \"8.6.0\"', content)
+          content = re.sub(r'com.android.library.*version.*\"[0-9.]+\"', 'com.android.library\" version \"8.6.0\"', content)
+          f = open('android/settings.gradle', 'w')
+          f.write(content)
+          f.close()
+          "
+          python3 -c "
+          import re
           f = open('android/gradle/wrapper/gradle-wrapper.properties', 'r')
           content = f.read()
           f.close()
-          import re
-          content = re.sub(r'gradle-.*-all.zip', 'gradle-8.7-all.zip', content)
+          content = re.sub(r'gradle-[0-9.]+-all.zip', 'gradle-8.7-all.zip', content)
           f = open('android/gradle/wrapper/gradle-wrapper.properties', 'w')
           f.write(content)
           f.close()
