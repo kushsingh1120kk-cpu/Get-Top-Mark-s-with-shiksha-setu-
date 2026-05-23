@@ -4,7 +4,7 @@ workflows:
     environment:
       flutter: 3.27.0
       android_signing:
-        - shikshasetu
+        - Shikshasetu
     scripts:
       - name: Extract ZIP
         script: |
