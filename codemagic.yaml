@@ -30,6 +30,17 @@ workflows:
           f.write(content)
           f.close()
           "
+          python3 -c "
+          import re
+          f = open('android/settings.gradle', 'r')
+          content = f.read()
+          f.close()
+          content = re.sub(r'id .com.android.application. version .[0-9.]+.', 'id \"com.android.application\" version \"8.6.0\"', content)
+          content = re.sub(r'id .com.android.library. version .[0-9.]+.', 'id \"com.android.library\" version \"8.6.0\"', content)
+          f = open('android/settings.gradle', 'w')
+          f.write(content)
+          f.close()
+          "
       - name: Get packages
         script: cd project/shiksha_setu && flutter pub get
       - name: Build AAB
