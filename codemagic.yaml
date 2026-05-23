@@ -1,8 +1,11 @@
+
 workflows:
   android-workflow:
     name: Android AAB Build
     environment:
       flutter: 3.27.0
+      android_signing:
+        - shiksha setu
     scripts:
       - name: Extract ZIP
         script: |
@@ -15,17 +18,6 @@ workflows:
           content = content.replace('compileSdk = flutter.compileSdkVersion.toInteger()', 'compileSdk = 35')
           content = content.replace('targetSdk = flutter.targetSdkVersion.toInteger()', 'targetSdk = 35')
           f = open('android/app/build.gradle', 'w')
-          f.write(content)
-          f.close()
-          "
-          python3 -c "
-          import re
-          f = open('android/settings.gradle', 'r')
-          content = f.read()
-          f.close()
-          content = re.sub(r'com.android.application.*version.*\"[0-9.]+\"', 'com.android.application\" version \"8.6.0\"', content)
-          content = re.sub(r'com.android.library.*version.*\"[0-9.]+\"', 'com.android.library\" version \"8.6.0\"', content)
-          f = open('android/settings.gradle', 'w')
           f.write(content)
           f.close()
           "
