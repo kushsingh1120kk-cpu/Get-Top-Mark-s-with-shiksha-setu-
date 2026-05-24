@@ -44,6 +44,6 @@ workflows:
       - name: Get packages
         script: cd project/shiksha_setu && flutter pub get
       - name: Build AAB
-        script: cd project/shiksha_setu && flutter build appbundle --release
+        script: cd project/shiksha_setu && 
     artifacts:
       - project/shiksha_setu/build/**/outputs/**/*.aab
